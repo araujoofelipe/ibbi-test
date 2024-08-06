@@ -1,7 +1,7 @@
 import asyncio
 from fastapi import FastAPI
 from app.database.postgres import engine, Base
-from app.routers import category, product, dollar_price
+from app.routers import category, product, dollar_price, order
 from app.cron.update_dollar import update_dollar
 
 async def lifespan(app: FastAPI):
@@ -26,3 +26,4 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(category.router, prefix="/categories", tags=["categories"])
 app.include_router(product.router, prefix="/products", tags=["products"])
 app.include_router(dollar_price.router, prefix="/dollar-price", tags=["dollar-price"])
+app.include_router(order.router, prefix="/orders", tags=["orders"])

@@ -2,6 +2,7 @@ from datetime import datetime
 from pydantic import BaseModel, HttpUrl, constr
 from typing import Optional
 
+# Category Schemas
 class CategoryBase(BaseModel):
     name: constr(max_length=15)
     description: Optional[str] = None
@@ -15,6 +16,7 @@ class Category(CategoryBase):
     class Config:
         orm_mode = True
 
+# Product Schemas
 class ProductBase(BaseModel):
     name: constr(max_length=15)
     description: str
@@ -34,13 +36,32 @@ class Product(ProductBase):
     class Config:
         orm_mode = True
 
-class DollarPriceCreate(ProductBase):
-    pass
-        
-class DollarPrice(BaseModel):
-    id: int
+# DollarPrice Schemas
+class DollarPriceBase(BaseModel):
     price: float
     updated_at: datetime
+
+class DollarPriceCreate(BaseModel):
+    price: float
+
+class DollarPrice(DollarPriceBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+# Order Schemas
+class OrderBase(BaseModel):
+    product_id: int
+    quantity: int
+    price_in_real: float
+    price_in_dollar: float
+
+class OrderCreate(OrderBase):
+    pass
+
+class Order(OrderBase):
+    id: int
 
     class Config:
         orm_mode = True
