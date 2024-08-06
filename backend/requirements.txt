@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+sqlalchemy
+databases[postgresql]
+asyncpg
+python-dotenv
+alembic
+httpx==0.24.0
